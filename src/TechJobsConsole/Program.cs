@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.VisualBasic;
 
 namespace TechJobsConsole
 {
     class Program
     {
+        //private static Dictionary<string, string> dict;
+
         static void Main(string[] args)
         {
             // Create two Dictionary vars to hold info for menu and data
@@ -42,6 +45,9 @@ namespace TechJobsConsole
                     {
                         List<string> results = JobData.FindAll(columnChoice);
 
+                        //sort result before printing in console
+                        results.Sort();
+
                         Console.WriteLine("\n*** All " + columnChoices[columnChoice] + " Values ***");
                         foreach (string item in results)
                         {
@@ -64,6 +70,8 @@ namespace TechJobsConsole
                     if (columnChoice.Equals("all"))
                     {
                         Console.WriteLine("Search all fields not yet implemented.");
+                        searchResults = JobData.FindByValue(searchTerm);
+                        PrintJobs(searchResults);
                     }
                     else
                     {
@@ -118,7 +126,40 @@ namespace TechJobsConsole
 
         private static void PrintJobs(List<Dictionary<string, string>> someJobs)
         {
-            Console.WriteLine("PrintJobs is not implemented yet");
+            /*
+             * *****
+                name: Sr. IT Analyst (Data/BI)
+                employer: Bull Moose Industries
+                location: Saint Louis
+                position type: Data Scientist / Business Intelligence
+                core competency: Statistical Analysis
+                *****
+             */
+            if(someJobs.Count == 0)
+            {
+                Console.WriteLine("There is no jobs to list.");
+            }
+            //someJobs.Values.OrderBy(v => v).ToList();
+            foreach (Dictionary<string, string> job in someJobs)
+            {
+                if (job.Keys.Count > 0)
+                {
+                    Console.WriteLine("*****");
+                    foreach (string key in job.Keys)
+                    {     
+                        Console.WriteLine(key + ": "+ job.GetValueOrDefault(key));
+                    }
+                    Console.WriteLine("*****");
+                    Console.WriteLine();
+                }
+                else
+                {
+                    Console.WriteLine("There is no enough job data to display in this job.");
+                }
+            }
+            //Console.WriteLine("PrintJobs is not implemented yet");
+            
+         
         }
     }
 }

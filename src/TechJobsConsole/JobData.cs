@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 
@@ -35,9 +36,36 @@ namespace TechJobsConsole
                     values.Add(aValue);
                 }
             }
+           
             return values;
         }
 
+        public static List<Dictionary<string, string>> FindByValue (string value)
+        {
+            // load data, if not already loaded
+            LoadData();
+
+            //HashSet<Dictionary<string, string>> jobs = new HashSet<Dictionary<string, string>>();
+            List<Dictionary<string, string>> jobs = new List<Dictionary<string, string>>();
+            foreach (Dictionary<string, string> job in AllJobs)
+            {
+                List<string> lowercaseValues = new List<string>();
+                foreach(string origValue in job.Values)
+                {
+                    if (origValue.ToUpper().Contains(value.ToUpper()))
+                    {
+                        if(!jobs.Contains(job))
+                        {
+                            jobs.Add(job);
+                            break;
+                        }
+                    }
+                }
+                
+            }
+
+            return jobs;
+        }
         public static List<Dictionary<string, string>> FindByColumnAndValue(string column, string value)
         {
             // load data, if not already loaded
