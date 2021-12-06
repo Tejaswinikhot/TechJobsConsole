@@ -63,8 +63,10 @@ namespace TechJobsConsole
                 }
                 
             }
+            List<Dictionary<string, string>> allJobsCopy = AllJobs.ToList();
 
-            return jobs;
+
+            return allJobsCopy;
         }
         public static List<Dictionary<string, string>> FindByColumnAndValue(string column, string value)
         {
@@ -77,13 +79,13 @@ namespace TechJobsConsole
             {
                 string aValue = row[column];
 
-                if (aValue.Contains(value))
+                if (aValue.ToUpper().Contains(value.ToUpper()))
                 {
                     jobs.Add(row);
                 }
             }
-
-            return jobs;
+            List<Dictionary<string, string>> findByColumnAndValueCopy = jobs.ToList();
+            return findByColumnAndValueCopy;
         }
 
         /*
